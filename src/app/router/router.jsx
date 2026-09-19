@@ -9,6 +9,7 @@ import ExamAnalysisPage from "../../features/exam-analysis/ExamAnalysisPage";
 import RevisionPage from "../../features/revision/RevisionPage";
 import SelfAssessmentPage from "../../features/self-assessment/SelfAssessmentPage";
 import SkillsPage from "../../features/skills/SkillsPage";
+import VideoFeedPage from "../../features/video-feed/VideoFeedPage";
 
 export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -26,6 +27,7 @@ export const router = createBrowserRouter([
       { path: "upload", element: <UploadPage /> },
       { path: "exams/:examId", element: <ExamAnalysisPage /> },
       { path: "revision", element: <RevisionPage /> },
+      { path: "feed", element: <VideoFeedPage /> },
       { path: "self-assessment", element: <SelfAssessmentPage /> },
       { path: "skills", element: <SkillsPage /> },
       { path: "*", element: <Navigate to="/dashboard" replace /> },

@@ -8,6 +8,18 @@
   font-size: 28px;
 }
 
+.revision-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.revision-more-link {
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
 .revision-tabs {
   display: flex;
   gap: var(--space-2);
@@ -88,4 +100,10 @@
 .revision-actions .ui-btn {
   padding: 8px 14px;
   font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .revision-header {
+    flex-direction: column;
+  }
 }

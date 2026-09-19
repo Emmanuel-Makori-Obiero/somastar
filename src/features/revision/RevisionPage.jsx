@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { revisionApi } from "../../services/api";
-import { Card, Button, EmptyState, ErrorBanner } from "../../components/ui/ui.jsx";
+import { EDUVANCE_URL } from "../../services/links";
+import {
+  Card,
+  Button,
+  EmptyState,
+  ErrorBanner,
+} from "../../components/ui/ui.jsx";
 import "./RevisionPage.css";
 
 const FILTERS = [
@@ -47,8 +53,15 @@ export default function RevisionPage() {
 
   return (
     <div className="revision-page">
-      <h1>Revision</h1>
-      <p>Questions worth revisiting, pulled from your analysed exams.</p>
+      <div className="revision-header">
+        <div>
+          <h1>Revision</h1>
+          <p>Questions worth revisiting, pulled from your analysed exams.</p>
+        </div>
+        <a className="revision-more-link" href={EDUVANCE_URL}>
+          <Button>Revise more</Button>
+        </a>
+      </div>
 
       <div className="revision-tabs" role="tablist">
         {FILTERS.map((f) => (
@@ -70,7 +83,11 @@ export default function RevisionPage() {
         !error && <p>Loading revision material…</p>
       ) : items.length === 0 ? (
         <EmptyState
-          title={filter === "pending" ? "Nothing to revise right now" : "Nothing here yet"}
+          title={
+            filter === "pending"
+              ? "Nothing to revise right now"
+              : "Nothing here yet"
+          }
           description={
             filter === "pending"
               ? "Questions you missed or only partly got will show up here after an exam is analysed."
@@ -82,19 +99,36 @@ export default function RevisionPage() {
           {items.map((item) => (
             <Card key={item.id} className="revision-item">
               <div className="revision-item-header">
-                <span className="revision-topic">{item.topic || "General"}</span>
-                {item.difficulty && <span className="revision-difficulty">{item.difficulty}</span>}
+                <span className="revision-topic">
+                  {item.topic || "General"}
+                </span>
+                {item.difficulty && (
+                  <span className="revision-difficulty">{item.difficulty}</span>
+                )}
               </div>
               <div className="revision-question">{item.question_text}</div>
-              {item.explanation && <div className="revision-explanation">{item.explanation}</div>}
+              {item.explanation && (
+                <div className="revision-explanation">{item.explanation}</div>
+              )}
               <div className="revision-meta">{item.exam_title}</div>
               <div className="revision-actions">
                 {item.status !== "reviewed" && (
-                  <Button variant="secondary" onClick={() => move(item, "reviewed")}>Reviewed</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => move(item, "reviewed")}
+                  >
+                    Reviewed
+                  </Button>
                 )}
-                {item.status !== "mastered" && <Button onClick={() => move(item, "mastered")}>Mastered</Button>}
+                {item.status !== "mastered" && (
+                  <Button onClick={() => move(item, "mastered")}>
+                    Mastered
+                  </Button>
+                )}
                 {item.status !== "pending" && (
-                  <Button variant="ghost" onClick={() => move(item, "pending")}>Back to revise</Button>
+                  <Button variant="ghost" onClick={() => move(item, "pending")}>
+                    Back to revise
+                  </Button>
                 )}
               </div>
             </Card>

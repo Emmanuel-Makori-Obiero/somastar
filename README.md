@@ -25,6 +25,10 @@ npm install
 npm run dev                         # http://localhost:5173
 ```
 
+The "Revise more" button opens Eduvance. It defaults to
+`https://eduvance-nine.vercel.app/`; set `VITE_EDUVANCE_URL` if you need to
+point SomaStar at a different Eduvance frontend.
+
 ## Real AI (Claude)
 
 The default `LLM_PROVIDER=mock` works offline but does **not** read your uploaded file.
