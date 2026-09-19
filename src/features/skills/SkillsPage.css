@@ -1,0 +1,84 @@
+.skills-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.skills-page h1 {
+  font-size: 28px;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-3);
+}
+
+.skill-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skill-row-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.skill-name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.skill-level {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.skill-level-strong {
+  background: #E6F2E9;
+  color: var(--color-success);
+}
+
+.skill-level-developing {
+  background: #FBF3DD;
+  color: var(--color-accent-gold);
+}
+
+.skill-level-needs-work {
+  background: #FBEEE9;
+  color: var(--color-danger);
+}
+
+.skill-bar {
+  height: 8px;
+  background: var(--color-background);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.skill-bar-strong {
+  background: var(--color-success);
+}
+
+.skill-bar-developing {
+  background: var(--color-accent-gold);
+}
+
+.skill-bar-needs-work {
+  background: var(--color-danger);
+}
+
+.skill-meta {
+  font-size: 12px;
+  color: var(--color-muted);
+}

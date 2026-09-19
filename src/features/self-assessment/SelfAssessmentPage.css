@@ -1,0 +1,117 @@
+.assessment-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.assessment-page h1 {
+  font-size: 28px;
+}
+
+.assessment-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.assessment-main,
+.assessment-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.assessment-main h2,
+.assessment-side h2 {
+  font-size: 16px;
+  margin-bottom: var(--space-3);
+}
+
+.assessment-note {
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.career-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.career-tag {
+  background: var(--color-secondary);
+  color: #5A5220;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.assessment-overview {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.overview-value {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.overview-label {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+
+.assistant-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.assistant-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: var(--space-3);
+}
+
+.assistant-msg {
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  line-height: 1.4;
+}
+
+.assistant-msg-user {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  align-self: flex-end;
+}
+
+.assistant-msg-assistant {
+  background: var(--color-background);
+  color: var(--color-text);
+  align-self: flex-start;
+}
+
+.assistant-form {
+  display: flex;
+  gap: 8px;
+}
+
+.assistant-form input {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+@media (max-width: 900px) {
+  .assessment-grid {
+    grid-template-columns: 1fr;
+  }
+}

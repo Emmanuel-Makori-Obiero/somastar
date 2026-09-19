@@ -1,16 +1,63 @@
-# React + Vite
+# Somastar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Adaptive learning and exam intelligence: upload an exam, get a question-by-question breakdown,
+a skill profile, revision items and career suggestions.
 
-Currently, two official plugins are available:
+- **Frontend:** React + Vite (`src/`)
+- **Backend:** FastAPI + SQLAlchemy + Alembic (`backend/`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Run it locally
 
-## React Compiler
+### Backend
+```bash
+cd backend
+python -m venv venv
+source venv/Scripts/activate        # Windows Git Bash  (macOS/Linux: source venv/bin/activate)
+python -m pip install -r requirements.txt
+cp .env.example .env                # then edit; see "Real AI" below
+uvicorn app.main:app --reload --port 8000
+```
+Database migrations run automatically on startup. Health check: http://localhost:8000/api/health
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Frontend
+```bash
+npm install
+npm run dev                         # http://localhost:5173
+```
 
-## Expanding the ESLint configuration
+## Real AI (Claude)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The default `LLM_PROVIDER=mock` works offline but does **not** read your uploaded file.
+For real extraction and analysis, set in `backend/.env`:
+
+```
+LLM_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-...
+ANTHROPIC_MODEL=claude-sonnet-5
+```
+Claude reads the uploaded PDF/PNG/JPG directly. If it can't read a score it leaves it blank rather than guessing.
+
+## How analysis works
+
+`POST /api/exams` validates the upload, returns `202` immediately and analyses in the background.
+The exam's `status` moves `queued → extracting → analysing_questions → generating_skills → aggregating → completed`
+(or `failed` with a safe `error_message`). The frontend polls `GET /api/exams/{id}` for real progress.
+Failed exams can be retried with `POST /api/exams/{id}/reanalyze`.
+
+## Tests
+```bash
+cd backend && python -m pytest
+```
+
+## Changing the database schema
+```bash
+cd backend
+alembic revision --autogenerate -m "describe change"
+# review the generated file in migrations/versions/, then restart the server (or: alembic upgrade head)
+```
+
+## Production checklist
+- `ENV=production`, a random `JWT_SECRET` (32+ chars), explicit `CORS_ORIGINS` — the app refuses to start otherwise.
+- Postgres via `DATABASE_URL`; object storage instead of local `uploads/`.
+- Run analysis in a real worker/queue once volume grows (currently FastAPI background tasks).
+- Auth rate limiting is in-memory (single process); back it with Redis for multiple workers.
